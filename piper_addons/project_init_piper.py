@@ -12,8 +12,7 @@ project_names = ['1ubq']
 
 def init_project_files(project_name):
     print("Creating piper- project folder for "+project_name+"...")
-    piper_dir = [k for k in os.listdir('../') if 'piper-' in k][0]
-    main_path = '../'+piper_dir+'/piper_projects/'
+    main_path = '../piper_projects/'
     project_folder = main_path+project_name+"/"
     project_output = project_folder+project_name+"_output/"
 
