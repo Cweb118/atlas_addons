@@ -2,9 +2,10 @@ import os
 import sys
 
 #TO USE:
-#Option 1: Edit the options variable to contain each flag you would like to pass into piper
+#Option 1: Edit the options variable to contain each flag you would like to pass into piper-
 #Option 2: In the command line, type: python project_init_atlas.py flag1 flag2 flag3 etc.
 #If no names are provided in option 2 it will default to performing option 1
+from datetime import datetime
 
 options = ['--rec RECEPTOR.pdb',
            '--lig LIGAND.pdb',
@@ -20,10 +21,14 @@ if __name__ == "__main__":
     output = [k for k in files if 'output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
-    sys.stdout = open(output.split('_')[0]+"_log.txt", "w")
+    now = datetime.now().strftime("%Y%m%d%H%M%S")
+    output_file = output.split('_')[0]+"_log_"+now+".txt"
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(output_file, "w")
     options = ' '.join(options)
-    run_piper(options)
+    run_piper(options+' | tee '+output_file)
     sys.stdout.close()
+    sys.stdout=stdoutOrigin
 
 
 # Options:
@@ -98,10 +103,10 @@ if __name__ == "__main__":
 #
 #
 # Piper Location
-# --piper-base BASE
+# --piper--base BASE
 #     Base directory for Piper installation
 #
-# --piper-license PIPER_LICENSE
+# --piper--license PIPER_LICENSE
 #     Piper license file
 #
 #

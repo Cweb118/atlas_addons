@@ -1,8 +1,9 @@
 import os
 import sys
+from datetime import datetime
 
 #TO USE:
-#Option 1: Edit the options variable to contain each flag you would like to pass into piper
+#Option 1: Edit the options variable to contain each flag you would like to pass into piper-
 #Option 2: In the command line, type: python project_init_atlas.py flag1 flag2 flag3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 
@@ -19,11 +20,15 @@ if __name__ == "__main__":
     os.chdir(output)
     if len(sys.argv) > 1:
         options = sys.argv[1:]
-    pdb_name = options[0].split('.pdb')[0].split('/')[-1]
-    sys.stdout = open(pdb_name+"_log.txt", "w")
+    #pdb_name = options[0].split('.pdb')[0].split('/')[-1]
+    now = datetime.now().strftime("%Y%m%d%H%M%S")
+    output_file = output.split('_')[0]+"_log_"+now+".txt"
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(output_file, "w")
     options = ' '.join(options)
-    run_atlas(options)
+    run_atlas(options+' | tee '+output_file)
     sys.stdout.close()
+    sys.stdout=stdoutOrigin
 
 # Options
 #
@@ -60,10 +65,10 @@ if __name__ == "__main__":
 # --auto-flex
 #     Automatically choose consensus sites to be used for flexibility based on predicted binding site rather than manually choosing sites (see Flexibility section below).
 #
-# --atlas-base
-#     If the atlas scripts are run from within their directory, all necessary parameter files and dependencies should automatically be found. If you move the scripts, you can use this option to specify the location of these files.
+# --atlas--base
+#     If the atlas- scripts are run from within their directory, all necessary parameter files and dependencies should automatically be found. If you move the scripts, you can use this option to specify the location of these files.
 #
-# --atlas-license
-#     By default, your atlas license will be found within the atlas installation. If, for some unexpected reason, this file is located elsewhere, you may use this option to specify its location.
+# --atlas--license
+#     By default, your atlas- license will be found within the atlas- installation. If, for some unexpected reason, this file is located elsewhere, you may use this option to specify its location.
 #
 

@@ -10,9 +10,10 @@ project_names = ['1ubq']
 
 
 def init_project_files(project_name):
-    print("Creating atlas project folder for "+project_name+"...")
-
-    main_path = '../atlas_projects/'
+    print("Creating atlas- project folder for "+project_name+"...")
+    atlas_dir = [k for k in os.listdir('../') if 'atlas-' in k][0]
+    main_path = '../'+atlas_dir+'/atlas_projects/'
+    print(main_path)
     project_folder = main_path+project_name+"/"
     project_output = project_folder+project_name+"_output/"
 
