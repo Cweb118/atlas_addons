@@ -17,18 +17,11 @@ def run_piper(options):
     os.system('../../piper_package/bin/run_piper '+options)
 
 if __name__ == "__main__":
-    files = os.listdir()
-    output = [k for k in files if 'output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
-    now = datetime.now().strftime("%Y%m%d%H%M%S")
-    output_file = output.split('_')[0]+"_log_"+now+".txt"
-    stdoutOrigin=sys.stdout
-    sys.stdout = open(output_file, "w")
     options = ' '.join(options)
-    run_piper(options+' | tee '+output_file)
-    sys.stdout.close()
-    sys.stdout=stdoutOrigin
+    run_piper(options)
+
 
 
 # Options:
