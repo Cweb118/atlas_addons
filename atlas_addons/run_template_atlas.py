@@ -1,34 +1,34 @@
 import os
+import shutil
 import sys
-from datetime import datetime
 
 #TO USE:
 #Option 1: Edit the options variable to contain each flag you would like to pass into piper-
 #Option 2: In the command line, type: python project_init_atlas.py flag1 flag2 flag3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 
-options = ['../RECEPTOR.pdb',
+options = ['RECEPTOR.pdb',
            '--np 22',
            ]
 
 def run_atlas(options):
-    os.system('../../../atlas_package/bin/run_atlas '+options)
+    os.system('../../atlas_package/bin/run_atlas '+options)
 
 if __name__ == "__main__":
     files = os.listdir()
     output = [k for k in files if 'output' in k][0]
-    os.chdir(output)
     if len(sys.argv) > 1:
         options = sys.argv[1:]
-    #pdb_name = options[0].split('.pdb')[0].split('/')[-1]
-    now = datetime.now().strftime("%Y%m%d%H%M%S")
-    output_file = output.split('_')[0]+"_log_"+now+".txt"
-    stdoutOrigin=sys.stdout
-    sys.stdout = open(output_file, "w")
+    pdb_name = options[0]
     options = ' '.join(options)
-    run_atlas(options+' | tee '+output_file)
-    sys.stdout.close()
-    sys.stdout=stdoutOrigin
+    run_atlas(options)
+    files = os.listdir()
+    for file in files:
+        if file != output:
+            if file != pdb_name:
+                if file != os.path.basename(__file__):
+                    shutil.move(file, output+'/'+file)
+
 
 # Options
 #
