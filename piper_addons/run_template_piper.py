@@ -3,7 +3,7 @@ import sys
 
 #TO USE:
 #Option 1: Edit the options variable to contain each flag you would like to pass into piper-
-#Option 2: In the command line, type: python project_init_atlas.py flag1 flag2 flag3 etc.
+#Option 2: In the command line, type: python project_init_single_atlas.py flag1 flag2 flag3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 from datetime import datetime
 
@@ -14,7 +14,7 @@ options = ['--rec RECEPTOR.pdb',
            ]
 
 def run_piper(options):
-    os.system('../../piper_package/bin/run_piper '+options)
+    os.system('PIPER_PATH'+options)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

@@ -3,7 +3,7 @@ import os
 
 #TO USE:
 #Option 1: Edit the project_names variable to contain each name you would like to create a project folder for
-#Option 2: In the command line, type: python project_init_atlas.py name1 name2 name3 etc.
+#Option 2: In the command line, type: python project_init_single_atlas.py name1 name2 name3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 
 
@@ -24,6 +24,7 @@ def init_project_files(project_name):
     run_template = open('run_template_piper.py', "r")
     run_template_txt = run_template.read()
     run_txt = run_template_txt.replace('0UTPUT', project_name+"_output")
+    run_txt = run_txt.replace('PIPER_PATH', '../../piper_package/bin/run_piper ')
 
     project_run = open(project_folder+'run_'+project_name+'_piper.py', "w")
     project_run.write(run_txt)

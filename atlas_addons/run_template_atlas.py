@@ -4,22 +4,31 @@ import sys
 
 #TO USE:
 #Option 1: Edit the options variable to contain each flag you would like to pass into piper-
-#Option 2: In the command line, type: python project_init_atlas.py flag1 flag2 flag3 etc.
+#Option 2: In the command line, type: python project_init_single_atlas.py flag1 flag2 flag3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 
 options = ['RECEPTOR.pdb',
            '--np 22',
            ]
 
+# WARNING: If you have this turned on it will take the first pdb it finds in the folder and run atlas on it.
+# Only enable this if you are sure you will not have multiple pdbs in the same folder.
+auto_detect_pdb = True
+
 def run_atlas(options):
-    os.system('../../atlas_package/bin/run_atlas '+options)
+    os.system('ATLAS_PATH'+options)
 
 if __name__ == "__main__":
     files = os.listdir()
     output = [k for k in files if 'output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
-    pdb_name = options[0]
+    if auto_detect_pdb:
+        files = os.listdir()
+        pdb_name = [x for x in files if '.pdb' in x][0]
+        options = [pdb_name]+options[1:]
+    else:
+        pdb_name = options[0]
     options = ' '.join(options)
     run_atlas(options)
     files = os.listdir()
