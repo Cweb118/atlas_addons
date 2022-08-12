@@ -21,7 +21,7 @@ def init_project_files(project_name):
         if not os.path.exists(path):
             os.makedirs(path)
 
-    run_template = open('run_template_atlas.py', "r")
+    run_template = open('templates/run_template_atlas.py', "r")
     run_template_txt = run_template.read()
     run_txt = run_template_txt.replace('0UTPUT', project_name+"_output")
     run_txt = run_txt.replace('ATLAS_PATH', '../../atlas_package/bin/run_atlas ')
