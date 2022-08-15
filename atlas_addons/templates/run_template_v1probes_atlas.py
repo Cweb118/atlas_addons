@@ -16,7 +16,23 @@ options = ['RECEPTOR.pdb',
 auto_detect_pdb = False
 
 def run_atlas(options):
-    os.system('ATLAS_PATH'+options)
+    os.system('ATLAS_PATH/run_atlas '+options)
+
+def move_all_output(output_folder):
+    files = os.listdir()
+    for file in files:
+        if 'output' not in file:
+            if file != pdb_name:
+                if '.py' not in file:
+                    shutil.move(file, output_folder+'/'+file)
+
+def check_druggability():
+    files = os.listdir()
+    tar = [x for x in files if 'tar.xz' in x][0]
+    output_filename = "atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
+    os.system("ATLAS_PATH/atlas_classify_druggability "+tar+"  > "+output_filename)
+
+
 
 if __name__ == "__main__":
     files = os.listdir()
@@ -31,12 +47,11 @@ if __name__ == "__main__":
         pdb_name = options[0]
     options = ' '.join(options)
     run_atlas(options)
-    files = os.listdir()
-    for file in files:
-        if 'output' not in file:
-            if file != pdb_name:
-                if '.py' not in file:
-                    shutil.move(file, output+'/'+file)
+    check_druggability()
+    move_all_output(output)
+
+
+
 
 
 # Options

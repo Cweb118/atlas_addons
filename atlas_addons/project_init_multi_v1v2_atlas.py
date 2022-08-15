@@ -46,7 +46,7 @@ if __name__ == "__main__":
             run_template = open(template, "r")
             run_template_txt = run_template.read()
             run_txt = run_template_txt.replace('RECEPTOR.pdb', pdb)
-            run_txt = run_txt.replace('ATLAS_PATH', '../../atlas_package/bin/run_atlas ')
+            run_txt = run_txt.replace('ATLAS_PATH', '../../atlas_package/bin')
 
             subfolder_template_name = template_name.replace('template', subfolder_name)
             subfolder_run_file = subfolder_path+subfolder_template_name
