@@ -40,7 +40,7 @@ if __name__ == "__main__":
         options = [pdb_name]+options[1:]
     else:
         pdb_name = options[0]
-    options = [output_folder+options[0]]+options[1:]
+    options = [filedir+'/'+output_folder+'/'+options[0]]+options[1:]
     options = ' '.join(options)
     shutil.copy(filedir+'/'+pdb_name, filedir+'/'+output_folder+'/'+pdb_name)
     run_atlas(options)
