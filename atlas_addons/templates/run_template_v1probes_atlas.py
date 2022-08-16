@@ -14,17 +14,12 @@ options = ['RECEPTOR.pdb',
 # WARNING: If you have this turned on it will take the first pdb it finds in the folder and run atlas on it.
 # Only enable this if you are sure you will not have multiple pdbs in the same folder.
 auto_detect_pdb = False
+# If enabled, this will run atlas_classify_druggability after the main atlas script
+check_drug = True
 
 def run_atlas(options):
     os.system('ATLAS_PATH/run_atlas '+options)
 
-def move_all_output(output_folder):
-    files = os.listdir()
-    for file in files:
-        if 'output' not in file:
-            if file != pdb_name:
-                if '.py' not in file:
-                    shutil.move(file, output_folder+'/'+file)
 
 def check_druggability():
     files = os.listdir()
@@ -33,22 +28,24 @@ def check_druggability():
     os.system("ATLAS_PATH/atlas_classify_druggability "+tar+"  > "+output_filename)
 
 
-
 if __name__ == "__main__":
-    files = os.listdir()
-    output = [k for k in files if 'v1_output' in k][0]
+    filedir = os.path.dirname(__file__)
+    files = os.listdir(filedir)
+    output_folder = [k for k in files if 'v1_output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
     if auto_detect_pdb:
-        files = os.listdir()
+        files = os.listdir(filedir)
         pdb_name = [x for x in files if '.pdb' in x][0]
         options = [pdb_name]+options[1:]
     else:
         pdb_name = options[0]
+    options = [output_folder+options[0]]+options[1:]
     options = ' '.join(options)
+    shutil.copy(filedir+'/'+pdb_name, filedir+'/'+output_folder+'/'+pdb_name)
     run_atlas(options)
-    check_druggability()
-    move_all_output(output)
+    if check_drug:
+        check_druggability()
 
 
 

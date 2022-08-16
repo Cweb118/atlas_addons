@@ -14,13 +14,22 @@ options = ['RECEPTOR.pdb',
 # WARNING: If you have this turned on it will take the first pdb it finds in the folder and run atlas on it.
 # Only enable this if you are sure you will not have multiple pdbs in the same folder.
 auto_detect_pdb = True
+# If enabled, this will run atlas_classify_druggability after the main atlas script
+check_drug = True
 
 def run_atlas(options):
     os.system('ATLAS_PATH'+options)
 
+def check_druggability():
+    files = os.listdir()
+    tar = [x for x in files if 'tar.xz' in x][0]
+    output_filename = "atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
+    os.system("ATLAS_PATH/atlas_classify_druggability "+tar+"  > "+output_filename)
+
+
 if __name__ == "__main__":
     files = os.listdir()
-    output = [k for k in files if 'output' in k][0]
+    output_folder = [k for k in files if 'output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
     if auto_detect_pdb:
@@ -29,15 +38,12 @@ if __name__ == "__main__":
         options = [pdb_name]+options[1:]
     else:
         pdb_name = options[0]
+    options = [output_folder+options[0]]+options[1:]
     options = ' '.join(options)
+    shutil.copy(pdb_name, output_folder+'/'+pdb_name)
     run_atlas(options)
-    files = os.listdir()
-    for file in files:
-        if file != output:
-            if file != pdb_name:
-                if file != os.path.basename(__file__):
-                    shutil.move(file, output+'/'+file)
-
+    if check_drug:
+        check_druggability()
 
 # Options
 #
