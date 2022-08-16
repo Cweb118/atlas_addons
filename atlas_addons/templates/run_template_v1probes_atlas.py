@@ -21,10 +21,10 @@ def run_atlas(options):
     os.system('ATLAS_PATH/run_atlas '+options)
 
 
-def check_druggability():
-    files = os.listdir()
+def check_druggability(output_folder):
+    files = os.listdir(output_folder)
     tar = [x for x in files if 'tar.xz' in x][0]
-    output_filename = "atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
+    output_filename = output_folder+"atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
     os.system("ATLAS_PATH/atlas_classify_druggability "+tar+"  > "+output_filename)
 
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     shutil.copy(filedir+'/'+pdb_name, filedir+'/'+output_folder+'/'+pdb_name)
     run_atlas(options)
     if check_drug:
-        check_druggability()
+        check_druggability(filedir+'/'+output_folder+'/')
 
 
 
