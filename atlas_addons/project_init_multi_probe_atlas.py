@@ -12,6 +12,7 @@ import os
 
 
 main_project_folder_name = '1ubq'
+probe_versions = ['v1', 'v2']
 v1_template = 'run_template_v1probes_atlas.py'
 v2_template = 'run_template_v2probes_atlas.py'
 templates = [v1_template, v2_template]
@@ -32,11 +33,10 @@ if __name__ == "__main__":
     subfolder_names = [x.split('.')[0] for x in pdbs]
     for subfolder_name in subfolder_names:
         subfolder = project_folder+subfolder_name+"/"
-        subfolder_v1_output = subfolder+subfolder_name+"_v1_output/"
-        subfolder_v2_output = subfolder+subfolder_name+"_v2_output/"
         paths.append(subfolder)
-        paths.append(subfolder_v1_output)
-        paths.append(subfolder_v2_output)
+        for probe_version in probe_versions:
+            subfolder_vx_output = subfolder+subfolder_name+"_"+probe_version+"_output/"
+            paths.append(subfolder_vx_output)
 
     for path in paths:
         if not os.path.exists(path):
