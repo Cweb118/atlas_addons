@@ -2,16 +2,19 @@ import os
 import asyncio
 
 async def run_cmd(cmd):
-    os.system('python '+cmd)
+    try:
+        proc = await asyncio.create_subprocess_shell(
+            "python "+cmd,
+            shell=True,
+            stdout=asyncio.subprocess.DEVNULL,
+            stderr=asyncio.subprocess.DEVNULL)
+        await proc.communicate()
+    except asyncio.CancelledError:
+        proc.terminate()
+        print("Process Terminated")
 
 async def main():
     subfolder_run_files = SUBPROCESS_LIST
-    tasks = []
-    for cmd in subfolder_run_files:
-        task = asyncio.create_task(run_cmd(cmd))
-        tasks.append(task)
-
-    for task in tasks:
-        await task
+    await asyncio.gather(*[run_cmd(x) for x in subfolder_run_files])
 
 asyncio.run(main())

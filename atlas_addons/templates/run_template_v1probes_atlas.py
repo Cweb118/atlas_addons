@@ -8,7 +8,7 @@ import sys
 #If no names are provided in option 2 it will default to performing option 1
 
 options = ['RECEPTOR.pdb',
-           '--np 22',
+           '--np 8',
            ]
 
 # WARNING: If you have this turned on it will take the first pdb it finds in the folder and run atlas on it.

@@ -8,7 +8,7 @@ import sys
 #If no names are provided in option 2 it will default to performing option 1
 
 options = ['RECEPTOR.pdb',
-           '--np 22',
+           '--np 14',
            '--v2-probes',
            ]
 
@@ -31,7 +31,6 @@ def check_druggability(output_folder):
 
 if __name__ == "__main__":
     filedir = os.path.dirname(__file__)
-    print(filedir)
     files = os.listdir(filedir)
     output_folder = [k for k in files if 'v2_output' in k][0]
     if len(sys.argv) > 1:
