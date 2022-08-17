@@ -13,8 +13,8 @@ import os
 
 main_project_folder_name = '1ubq'
 probe_versions = ['v1', 'v2']
-v1_template = 'run_template_v1probes_atlas.py'
-v2_template = 'run_template_v2probes_atlas.py'
+v1_template = 'run_template_atlas_probes_V1.py'
+v2_template = 'run_template_atlas_probes_V2.py'
 templates = [v1_template, v2_template]
 
 #Choose from the following options:

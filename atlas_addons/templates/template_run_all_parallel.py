@@ -6,6 +6,7 @@ async def run_cmd(cmd):
     try:
         log_name = cmd.replace('.py', '_log.txt')
         logtxt = cmd+" start time: "+str(datetime.now())+'\n'
+        starttime_list = [int(datetime.strftime(datetime.now(),'%H')),int(datetime.strftime(datetime.now(),'%M')),int(datetime.strftime(datetime.now(),'%S'))]
         logfile = open(log_name, "w")
 
         proc = await asyncio.create_subprocess_shell(
@@ -26,6 +27,8 @@ async def run_cmd(cmd):
             print(msg)
             logtxt += msg+'\n'
         logtxt += cmd+" end time: "+str(datetime.now())
+        endtime_list = [int(datetime.strftime(datetime.now(),'%H')),int(datetime.strftime(datetime.now(),'%M')),int(datetime.strftime(datetime.now(),'%S'))]
+        logtxt += "run time: "+str((endtime_list[0])-starttime_list[0])+' hours, '+str((endtime_list[1])-starttime_list[1])+' minutes, '+str((endtime_list[2])-starttime_list[2])+' seconds'
         logfile.write(logtxt)
         logfile.close()
     except asyncio.CancelledError:

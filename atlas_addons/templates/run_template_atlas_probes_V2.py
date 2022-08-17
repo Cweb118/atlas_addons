@@ -8,7 +8,8 @@ import sys
 #If no names are provided in option 2 it will default to performing option 1
 
 options = ['RECEPTOR.pdb',
-           '--np 8',
+           '--np 14',
+           '--v2-probes',
            ]
 
 # WARNING: If you have this turned on it will take the first pdb it finds in the folder and run atlas on it.
@@ -24,14 +25,14 @@ def run_atlas(options):
 def check_druggability(output_folder):
     files = os.listdir(output_folder)
     tar = [x for x in files if 'tar.xz' in x][0]
-    output_filename = output_folder+"atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
+    output_filename = output_folder+"atlas_classify_druggabilty_v2_"+tar.split('.')[0]+".txt"
     os.system("ATLAS_PATH/atlas_classify_druggability "+output_folder+tar+"  > "+output_filename)
 
 
 if __name__ == "__main__":
     filedir = os.path.dirname(__file__)
     files = os.listdir(filedir)
-    output_folder = [k for k in files if 'v1_output' in k][0]
+    output_folder = [k for k in files if 'v2_output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
     if auto_detect_pdb:
@@ -44,11 +45,9 @@ if __name__ == "__main__":
     options = ' '.join(options)
     shutil.copy(filedir+'/'+pdb_name, filedir+'/'+output_folder+'/'+pdb_name)
     run_atlas(options)
+    shutil.move(filedir+'/'+output_folder+'/'+pdb_name, filedir+'/'+pdb_name)
     if check_drug:
         check_druggability(filedir+'/'+output_folder+'/')
-
-
-
 
 
 # Options
