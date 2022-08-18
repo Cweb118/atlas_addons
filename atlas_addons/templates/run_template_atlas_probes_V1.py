@@ -2,13 +2,8 @@ import os
 import shutil
 import sys
 
-#TO USE:
-#Option 1: Edit the options variable to contain each flag you would like to pass into piper-
-#Option 2: In the command line, type: python project_init_single_atlas.py flag1 flag2 flag3 etc.
-#If no names are provided in option 2 it will default to performing option 1
-
 options = ['RECEPTOR.pdb',
-           '--np 8',
+           '--np 6',
            ]
 
 # WARNING: If you have this turned on it will take the first pdb it finds in the folder and run atlas on it.
@@ -24,14 +19,14 @@ def run_atlas(options):
 def check_druggability(output_folder):
     files = os.listdir(output_folder)
     tar = [x for x in files if 'tar.xz' in x][0]
-    output_filename = output_folder+"atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
+    output_filename = output_folder+"atlas_classify_druggabilty_V1_"+tar.split('.')[0]+".txt"
     os.system("ATLAS_PATH/atlas_classify_druggability "+output_folder+tar+"  > "+output_filename)
 
 
 if __name__ == "__main__":
     filedir = os.path.dirname(__file__)
     files = os.listdir(filedir)
-    output_folder = [k for k in files if 'v1_output' in k][0]
+    output_folder = [k for k in files if 'V1_output' in k][0]
     if len(sys.argv) > 1:
         options = sys.argv[1:]
     if auto_detect_pdb:

@@ -2,17 +2,9 @@ import shutil
 import sys
 import os
 
-# TO USE:
-# Edit the project_folders variable, where:
-#   - the name to the left of the colon is the project folder
-#   - the list of names to the right of the colon are sub folders for running variations of the same project in sequence
-# Edit the project_templates variable, where:
-#   - the name to the left of the colon is the name of a sub folder
-#   - the name to the right of the colon is the name of the template you would like put in that folder
-
 
 main_project_folder_name = '1ubq'
-probe_versions = ['v1', 'v2']
+probe_versions = ['V1', 'V2']
 v1_template = 'run_template_atlas_probes_V1.py'
 v2_template = 'run_template_atlas_probes_V2.py'
 templates = [v1_template, v2_template]
@@ -45,7 +37,7 @@ if __name__ == "__main__":
     for pdb in pdbs:
         subfolder_name = pdb.split('.')[0]
         subfolder_path = project_folder+subfolder_name+"/"
-        shutil.move('pdb_input/'+pdb, subfolder_path+pdb)
+        shutil.copy('pdb_input/'+pdb, subfolder_path+pdb)
         pair = []
         for template_name in templates:
             template = 'templates/'+template_name
@@ -70,11 +62,11 @@ if __name__ == "__main__":
             for file in pair:
                 subfolder_run_files.append(file)
 
-    run_all_template_name = 'templates/template_run_all_'+run_style+'.py'
+    run_all_template_name = 'templates/run_all_template_'+run_style+'.py'
     run_all_template = open(run_all_template_name, "r")
     run_all_template_txt = run_all_template.read()
     run_all_txt = run_all_template_txt.replace('SUBPROCESS_LIST', str(subfolder_run_files))
-    project_run = open(project_folder+main_project_folder_name+'_run_all_'+run_style+'.py', "w")
+    project_run = open(project_folder+'run_all_'+main_project_folder_name+"_"+run_style+'.py', "w")
     project_run.write(run_all_txt)
     project_run.close()
 

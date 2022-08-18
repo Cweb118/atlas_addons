@@ -4,7 +4,7 @@ import sys
 
 #TO USE:
 #Option 1: Edit the options variable to contain each flag you would like to pass into piper-
-#Option 2: In the command line, type: python project_init_single_atlas.py flag1 flag2 flag3 etc.
+#Option 2: In the command line, type: python single_atlas_project_init.py flag1 flag2 flag3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 
 options = ['RECEPTOR.pdb',

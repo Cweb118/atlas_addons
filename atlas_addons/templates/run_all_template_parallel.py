@@ -37,7 +37,7 @@ async def run_cmd(cmd):
 
 async def main():
     subfolder_run_files = SUBPROCESS_LIST
-    for pair in subfolder_run_files:
-        await asyncio.gather(*[run_cmd(x) for x in pair])
+    print('Starting Parallel Atlas Analysis for: '+str(subfolder_run_files))
+    await asyncio.gather(*[run_cmd(x) for x in subfolder_run_files])
 
 asyncio.run(main())

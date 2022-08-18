@@ -3,7 +3,7 @@ import os
 
 #TO USE:
 #Option 1: Edit the project_names variable to contain each name you would like to create a project folder for
-#Option 2: In the command line, type: python project_init_single_atlas.py name1 name2 name3 etc.
+#Option 2: In the command line, type: python single_atlas_project_init.py name1 name2 name3 etc.
 #If no names are provided in option 2 it will default to performing option 1
 
 project_names = ['1ubq']
