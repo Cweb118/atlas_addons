@@ -1,11 +1,20 @@
 import os
 import shutil
 import sys
-
-#TO USE:
-#Option 1: Edit the options variable to contain each flag you would like to pass into piper-
-#Option 2: In the command line, type: python single_atlas_project_init.py flag1 flag2 flag3 etc.
-#If no names are provided in option 2 it will default to performing option 1
+from datetime import datetime
+from subprocess import Popen, PIPE
+#===============
+#
+# File: run_template_atlas.py
+# Version: 1.0, 08-22-22
+# Usage (cmd): python <filename>
+# Description: Runs atlas for the designated pdb (which can be auto-detected)
+#
+# Authors: Caleb Weber, Oleksandr Savytskyi, Ph.D, Thomas Caulfield, Ph.D
+# CAULFIELD LABORATORY, PROPERTY OF MAYO CLINIC
+# https://www.mayo.edu/research/labs/drug-discovery-design-optimization-novel-therapeutics-therapeutics
+#
+#===============
 
 options = ['RECEPTOR.pdb',
            '--np 22',
@@ -18,12 +27,51 @@ auto_detect_pdb = True
 check_drug = True
 
 def run_atlas(options):
-    os.system('ATLAS_PATH'+options)
+    cmd = 'ATLAS_PATH'+options
+    log_name = __file__.replace('.py', '_log.txt')
+    starttime = datetime.now()
+    logtxt = "Start Time: "+str(starttime)+'\n'
+    logfile = open(log_name, "w")
+
+    proc = Popen(
+        "python "+cmd,
+        shell=True,
+        stdout=PIPE,
+        stderr=PIPE)
+    stdout, stderr = proc.communicate()
+    msg = f'[{cmd!r} exited with {proc.returncode}]'
+    print(msg)
+    logtxt += msg+'\n'
+    if stdout:
+        msg = f'[stdout]\n{stdout.decode()}'
+        print(msg)
+        logtxt += msg+'\n'
+    if stderr:
+        msg = f'[stderr]\n{stderr.decode()}'
+        print(msg)
+        logtxt += msg+'\n'
+    endtime = datetime.now()
+    logtxt += "End Time: "+str(endtime)+'\n'
+
+    endtime = datetime.now()
+    duration = endtime - starttime
+    duration_in_s = duration.total_seconds()
+    days = divmod(duration_in_s, 86400)
+    hours = divmod(days[1], 3600)
+    minutes = divmod(hours[1], 60)
+    seconds = divmod(minutes[1], 1)
+    print("Run Duration: %d days, %d hours, %d minutes and %d seconds" % (days[0], hours[0], minutes[0], seconds[0]))
+    logtxt += "Run Duration: "+str(days[0])+" days, "+str(hours[0])+" hours, "+str(minutes[0])+" minutes, "+str(seconds[0])+" seconds"
+
+    logfile.write(logtxt)
+    logfile.close()
+
+
 
 def check_druggability():
     files = os.listdir()
     tar = [x for x in files if 'tar.xz' in x][0]
-    output_filename = "atlas_classify_druggabilty_v1_"+tar.split('.')[0]+".txt"
+    output_filename = "atlas_classify_druggabilty_"+tar.split('.')[0]+".txt"
     os.system("ATLAS_PATH/atlas_classify_druggability "+tar+"  > "+output_filename)
 
 
@@ -38,12 +86,18 @@ if __name__ == "__main__":
         options = [pdb_name]+options[1:]
     else:
         pdb_name = options[0]
-    options = [output_folder+options[0]]+options[1:]
+    options = [output_folder+'/'+options[0]]+options[1:]
     options = ' '.join(options)
     shutil.copy(pdb_name, output_folder+'/'+pdb_name)
     run_atlas(options)
+    shutil.move(output_folder+'/'+pdb_name, pdb_name)
     if check_drug:
         check_druggability()
+
+
+
+
+
 
 # Options
 #

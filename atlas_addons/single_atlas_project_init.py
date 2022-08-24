@@ -1,15 +1,29 @@
 import sys
 import os
 
-#TO USE:
-#Option 1: Edit the project_names variable to contain each name you would like to create a project folder for
-#Option 2: In the command line, type: python single_atlas_project_init.py name1 name2 name3 etc.
-#If no names are provided in option 2 it will default to performing option 1
+#===============
+#
+# File: single_atlas_project_init.py
+# Version: 1.0, 08-22-22
+# Usage (cmd): python single_atlas_project_init.py
+# Description: Creates a project folder for the given project name, then installs the designated run template within
+#
+# Authors: Caleb Weber, Oleksandr Savytskyi, Ph.D, Thomas Caulfield, Ph.D
+# CAULFIELD LABORATORY, PROPERTY OF MAYO CLINIC
+# https://www.mayo.edu/research/labs/drug-discovery-design-optimization-novel-therapeutics-therapeutics
+#
+#===============
 
-project_names = ['1ubq']
 
 
-def init_project_files(project_name):
+# Change your project's name here
+project_name = '1ubq'
+# Designate which template you wish to use (from the templates folder) here
+run_template = 'run_template_atlas.py'
+
+#Following project creation, place your pdb into the newly created folder.
+
+def init_project_files(project_name, run_template):
     print("Creating atlas- project folder for "+project_name+"...")
     main_path = '../atlas_projects/'
     print(main_path)
@@ -21,10 +35,10 @@ def init_project_files(project_name):
         if not os.path.exists(path):
             os.makedirs(path)
 
-    run_template = open('templates/run_template_atlas.py', "r")
+    run_template = open('templates/'+run_template, "r")
     run_template_txt = run_template.read()
     run_txt = run_template_txt.replace('0UTPUT', project_name+"_output")
-    run_txt = run_txt.replace('ATLAS_PATH', '../../atlas_package/bin/run_atlas ')
+    run_txt = run_txt.replace('ATLAS_PATH', '../../../atlas_package/bin/run_atlas ')
 
     project_run = open(project_folder+'run_'+project_name+'_atlas.py', "w")
     project_run.write(run_txt)
@@ -36,7 +50,8 @@ def init_project_files(project_name):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        project_names = sys.argv[1:]
-    for project_name in project_names:
-        init_project_files(project_name)
+    init_project_files(project_name, run_template)
+
+
+
+

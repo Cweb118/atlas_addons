@@ -2,6 +2,19 @@ import os
 import shutil
 import sys
 
+#===============
+#
+# File: run_template_atlas.py
+# Version: 1.0, 08-22-22
+# Usage (cmd): python <filename>
+# Description: Runs atlas for the designated pdb (which can be auto-detected)
+#
+# Authors: Caleb Weber, Oleksandr Savytskyi, Ph.D, Thomas Caulfield, Ph.D
+# CAULFIELD LABORATORY, PROPERTY OF MAYO CLINIC
+# https://www.mayo.edu/research/labs/drug-discovery-design-optimization-novel-therapeutics-therapeutics
+#
+#===============
+
 #TO USE:
 #Option 1: Edit the options variable to contain each flag you would like to pass into piper-
 #Option 2: In the command line, type: python single_atlas_project_init.py flag1 flag2 flag3 etc.

@@ -2,9 +2,24 @@ import shutil
 import sys
 import os
 
+#===============
+#
+# File: multi_probe_atlas_project_init.py
+# Version: 1.0, 08-22-22
+# Usage (cmd): python  multi_probe_atlas_project_init.py
+# Description: Creates a project folder and populates it with the pdbs in pdb_input along with designated templates with which to run atlas
+#
+# Authors: Caleb Weber, Oleksandr Savytskyi, Ph.D, Thomas Caulfield, Ph.D
+# CAULFIELD LABORATORY, PROPERTY OF MAYO CLINIC
+# https://www.mayo.edu/research/labs/drug-discovery-design-optimization-novel-therapeutics-therapeutics
+#
+#===============
 
+# The name of the project as a whole
 main_project_folder_name = '1ubq'
+# Which probe versions you would like to utilize
 probe_versions = ['V1', 'V2']
+# From the templates folder, which run templates would you like to use for each probe?
 v1_template = 'run_template_atlas_probes_V1.py'
 v2_template = 'run_template_atlas_probes_V2.py'
 templates = [v1_template, v2_template]
@@ -14,6 +29,9 @@ templates = [v1_template, v2_template]
 # - pairwise: runs v1/v2 simulations in parallel, with the variable pdbs in sequence
 # - parallel: runs all simulations at once
 run_style = 'pairwise'
+
+# Prior to running, place all PDBs you wish to be analyzed in the pdb_input folder.
+# These will be copied and placed in folders created within your project folder so that they may be examined.
 
 if __name__ == "__main__":
     print("Creating atlas- project folder for "+main_project_folder_name+"...")

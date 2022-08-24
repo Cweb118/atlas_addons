@@ -2,6 +2,19 @@ import os
 import shutil
 import sys
 
+#===============
+#
+# File: run_template_atlas_probes_V2.py
+# Version: 1.0, 08-22-22
+# Usage (cmd): python <filename>
+# Description: Runs atlas for the designated pdb (which can be auto-detected) with settings for V2 probes
+#
+# Authors: Caleb Weber, Oleksandr Savytskyi, Ph.D, Thomas Caulfield, Ph.D
+# CAULFIELD LABORATORY, PROPERTY OF MAYO CLINIC
+# https://www.mayo.edu/research/labs/drug-discovery-design-optimization-novel-therapeutics-therapeutics
+#
+#===============
+
 options = ['RECEPTOR.pdb',
            '--np 12',
            '--v2-probes',
